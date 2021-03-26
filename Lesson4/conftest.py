@@ -8,9 +8,10 @@ def browser(request):
     options = Options()
     options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
     browser = webdriver.Chrome(options=options)
-    yield [user_language, browser]
-    print("n\quit browser...")
-    browser.quit()
+    browser.implicitly_wait(10)
+    yield browser
+    print("\nquit browser...")
+
 
 @pytest.mark.parametrize('language', ["ru", "en-gb"])
 def test_guest_should_see_login_link(browser, language):
